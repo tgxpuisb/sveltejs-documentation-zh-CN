@@ -1,6 +1,6 @@
 # Svelte简介
 
-### 前言
+## 前言
 
 前几天在刷github趋势榜，意外的发现了这个开源项目，通过阅读文档与相关资讯了解到Svelte的用法，好处以及缺陷，并对其思想深深的吸引，虽然框架存在诸多不足，生态圈也不算完善，但是我个人认为，这不失为一种web组件化方向的探索。在寻找资料的过程中，我发现Svelte几乎没有什么中文相关资料和中文文档，于是我决定先将其文档翻译成中文，这样能让更多的人了解到Svelte框架。大家也可以一起为它添砖加瓦。
 
@@ -9,7 +9,7 @@
 以下是翻译的内容。如果你有什么好的想法，或者翻译中存在什么错误，欢迎提[iusse](https://github.com/tgxpuisb/sveltejs-documentation-zh-CN/issues)指正，非常感谢。
 
 
-### 什么是Svelte
+## 什么是Svelte
 如果您曾经构建过JavaScript应用程序，你或多或少使用过React，Angular，Vue和Ractive。与Svelte很像，这些工具都有一个目标，就是可以轻松的构建交互式用户界面。
 
 但Svelte有一个关键的区别：你的应用程序会在打包构建时（build）被转化成原生的可执行的javascript代码，且不需要一个运行时（runtime）来解释你的应用程序代码。这意味着你无需负担由于框架抽象或者在你的应用首次加载时产生的性能损耗。
@@ -18,7 +18,7 @@
 
 [阅读介绍性博客文章](https://svelte.technology/blog/frameworks-without-the-framework)，了解更多关于Svelte的目标和哲学。
 
-### 认识与理解svelte组件
+## 认识与理解svelte组件
 在Svelte中，应用程序由一个或多个组件组成。组件是封装了标签的，样式，与行为的可复用的自包含代的码块。(很像.vue文件)。
 
 像Ractive和Vue一样，Svelte也崇尚单文件组件的概念：组件只是一个`.html`文件。下面是一个简单的例子：
@@ -48,7 +48,7 @@ app.destroy();
 
 恭喜你，你刚刚已经了解了一半的SvelteAPI！
 
-### 入门
+## 入门
 通常来说，这里会说你需要使用`<script>`标签把框架引入到你的页面。但是由于Svelte在构建时就已经打包成了可运行的代码，所以它的工作方式会有所不同。
 
 Svelte的最好的使用方式是将其集成到你的构建系统中，这里有针对`Rollup`，`Browserify`，`Gulp`等的打包工具，[更多资料](https://github.com/sveltejs/svelte/#svelte)，请参阅这里获取最新的列表。
@@ -109,7 +109,7 @@ svelte compile --format iife HelloWorld.html > HelloWorld.js
 
 最后，在浏览器里面打开该页面，并在控制台中输入`app`可以查看更多API。
 
-### 组件API
+## 组件API
 
 正如我们上面看到的，你通过`new`关键字创建了一个组件实例：
 
@@ -136,7 +136,7 @@ const component = new MyComponent({
 
 除了你添加的[自定义方法](https://svelte.technology/guide#custom-methods)之外，每一个组件实例都提供少量的方法，你能控制这些方法操作组件。
 
-#### component.set(data)
+### component.set(data)
 
 该方法会根据传入的新`data`值更新组件状态并引起DOM的改变。`data`必须是一个纯粹的`javascript`对象。任何没有包含在`data`之内的属性将会保持和原来一样。
 
@@ -153,7 +153,7 @@ component.set({
 
 > 如果你之前使用过`Ractive`，这里会与`ractive.set(...)`非常类似，但是你必须始终使用`ractive.set(...)`而不能使用`ractive.set('foo', 'bar')`这种方式，并且你不是直接给对象设置关键字（比如，不能使用ES6中用{'class':1}这种）。它也非常类似于`React`的`setState`，除了svelte会导致同步更新，这意味着DOM总是处于可预测状态。
 
-#### component.get(key)
+### component.get(key)
 
 返回当前`key`的值
 
@@ -164,7 +164,7 @@ console.log( component.get( 'answer' ) ); // 'ask your mother'
 这也会取出[计算属性](https://svelte.technology/guide#computed-properties)的值
 
 
-#### component.observe(key, callback[, options])
+### component.observe(key, callback[, options])
 
 此方法允许你响应状态更改，结合生命周期钩子和双向绑定时这将会特别有用
 
@@ -225,7 +225,7 @@ drawingApp.observe( 'height', redraw, { defer: true });
 </script>
 ```
 
-#### component.on(eventName, callback)
+### component.on(eventName, callback)
 
 允许你响应事件
 
@@ -238,7 +238,7 @@ const listener = component.on( 'thingHappened', event => {
 listener.cancel();
 ```
 
-#### component.fire(eventName, event)
+### component.fire(eventName, event)
 
 与`component.on(...)`有关：
 ```js
@@ -251,7 +251,7 @@ component.fire( 'thingHappened', {
 
 > `component.on(...)`与`component.observe(...)`看起来很相似，但是它们有不同的用途，`Observers`被用来响应应用的数据流的变化和任何时候持续的变化，然而事件在处理离散的时刻会更好用，比如用户做了一个选择，选择引发了很多变动。
 
-#### component.destroy()
+### component.destroy()
 把组件从DOM中移除，同时也会移除所有创建的`observers`和事件监听，这也会触发一个`destory`事件。
 
 ```js
@@ -262,11 +262,11 @@ component.on( 'destroy', () => {
 component.destroy();
 ```
 
-### 模板语法
+## 模板语法
 
 `Svelte`不重复造轮子，学习`Svelte`模板只需要在`HTML`，`CSS`和`JavaScript`基础上少量的学习一些新知识即可。
 
-#### 标签
+### 标签
 标签允许你把数据绑定到模板上，无论何时修改数据（比如，在component.set（...）之后），DOM将自动更新。你可以在模板中使用任何JavaScript表达式，并且也会自动地更新：
 
 ```html
@@ -281,7 +281,7 @@ component.destroy();
 
 虽然使用`{{`、`}}`分隔标签，但Svelte不使用Mustache语法。 标签只是JavaScript表达式。
 
-#### Triples（直接输出html）
+### Triples（直接输出html）
 
 普通的分隔标签将会生成存文本，如果你需要将表达式转化成HTML，你可以把他包含在三个`{{{`,`}}}`中
 
@@ -294,7 +294,7 @@ component.destroy();
 
 > 使用三个花括号的形式将不会对HTML进行转义！如果你想显示用户输入，你有义务先对数据进行转义，否则你可能会遭受不同形式的攻击
 
-#### 条件渲染
+### 条件渲染
 
 通过将其包装在`if`块来控制模板的一部分是否被渲染。
 
@@ -330,7 +330,7 @@ component.destroy();
 {{/if}}
 ```
 
-#### 列表渲染
+### 列表渲染
 
 循环数据列表
 
@@ -361,7 +361,7 @@ component.destroy();
 </div>
 ```
 
-#### 指令
+### 指令
 
 最后，Svelte模板语法不同于传统HTML的地方在于：指令允许你添加添加事件处理程序，双向绑定，`refs(引用)`等特殊申明。我们在后面将会逐一介绍，你现在需要知道的是，可以通过`:`字符的方式来识别指令：
 
@@ -372,11 +372,11 @@ component.destroy();
 
 > 从技术上来说，`:`用来表示HTML属性的命名空间，如果遇到的话，将不会被视为指令
 
-### 样式作用域
+## 样式作用域
 
 Svelte的一个重要原则就是组件是独立的，可以在不同的上下文中复用，因此它有一个独特的CSS隔离机制，这样就不会意外的干扰到相同选择器的其他页面了
 
-#### 添加样式
+### 添加样式
 
 你的组件可以有一个`<style>`标签，像这样：
 ```html
@@ -393,7 +393,7 @@ Svelte的一个重要原则就是组件是独立的，可以在不同的上下�
 </style>
 ```
 
-#### 如何工作的
+### 如何工作的
 
 打开示例，检查元素以查看发生了什么，你会发现，Svelte已经向元素添加了一个svelte-[uniqueid]属性。并相应地转换了CSS选择器。因为页面上没有其他元素可以共享该选择器，所以页面上`class ='foo'`的任何其他元素都不会受到我们的样式的影响。
 
@@ -401,13 +401,13 @@ Svelte的一个重要原则就是组件是独立的，可以在不同的上下�
 
 > Svelte将会向含有该组件的页面添加一个<style>标签。如果您的网站具有[内容安全策略](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)，则动态添加样式可能是不可能的。如果是这样，您可以使用[服务器渲染CSS](https://svelte.technology/guide#rendering-css)。并在编译时使用`css：false`选项，或使用CLI的`--no-css`操作。
 
-#### 级联规则
+### 级联规则
 
 通常的级联机制仍然适用，任何全局的`.foo`样式仍然可以应用，如果我们的模板具有嵌套的组件与`class='foo'`元素，它们将继承我们的样式。
 
 > 样式隔离不是动态的，组件是一个已经编译好的实例，因此你不能在CSS中使用`{{tag}}`.
 
-### 行为
+## 行为
 
 除了样式与模板之外，组件还可以封装行为逻辑，为此，我们添加了一个`<script>`标签元素并导出了一个对象
 
@@ -423,7 +423,7 @@ Svelte的一个重要原则就是组件是独立的，可以在不同的上下�
 </script>
 ```
 
-#### 默认数据
+### 默认数据
 
 通常，组件具有默认数据是有意义的，它将会通过一个函数表达式来返回一个纯粹的JS对象
 
@@ -446,7 +446,7 @@ Svelte的一个重要原则就是组件是独立的，可以在不同的上下�
 
 > 上面的代码中使用了ES6的语法,Svelte会生成ES5的代码运行在各种平台上，它本身不会将ES6转化成ES5，所以如果你想使用ES6的语法，你需要了你的构建项目中使用[Babel](https://babeljs.io/)
 
-#### 计算属性
+### 计算属性
 
 通常你的程序使用的某个值依赖了其他的某个值，举个例子，您可能有一个过滤的列表，这取决于列表和过滤器。通常在JavaScript中，当任何依赖关系发生变化时，您必须添加逻辑来更新依赖属性。这样是常见的错误来源，随着应用的逐渐扩大，它会变得原来越糟糕。
 
@@ -479,7 +479,7 @@ Svelte允许您在计算属性中表达这些依赖关系，每当这些依赖�
 
 > `computed`字段**必须**是一个可迭代的对象，同时属性必须都是函数或者箭头函数表达式
 
-#### 生命周期钩子
+### 生命周期钩子
 
 Svelte提供两个控制逻辑的生命周期钩子`oncreate`，`ondestory`：
 
@@ -516,7 +516,7 @@ Svelte提供两个控制逻辑的生命周期钩子`oncreate`，`ondestory`：
 </script>
 ```
 
-#### Helpers
+### Helpers
 
 Helpers是一个小巧的函数，可以用于模板，下面的例子中，我们需要确保分钟和秒时刻都是两位的，我们需要自动补0，因此，我们添加了一个名为`leftPad`的Helper
 
@@ -564,7 +564,7 @@ Helpers是一个小巧的函数，可以用于模板，下面的例子中，我�
 > helper 函数应该是一个纯函数，换句话说就是在使用过程中不应该产生副作用，而他的返回值也仅仅只和传入参数有关。
 
 
-#### 自定义方法
+### 自定义方法
 
 除了[内置的方法](https://svelte.technology/guide#component-api)之外，你还可以使用自定义的方法。
 
@@ -598,7 +598,7 @@ component.say( '👋' );
 <button on:click='say("hello")'>say hello!</button>
 ```
 
-#### 自定义事件处理
+### 自定义事件处理
 
 我们过后会学习[事件处理](https://svelte.technology/guide#event-handlers)，如果你需要，可以先跳过这里，最后再回过头来看！
 
@@ -641,7 +641,7 @@ component.say( '👋' );
 </script>
 ```
 
-#### 命名空间
+### 命名空间
 
 假设组件在HTML命名空间中，如果你的组件是设计给`<svg>`元素使用的，则需要指定命名空间。
 
@@ -699,7 +699,7 @@ SmileyFace.html
 </script>
 ```
 
-### 嵌套组件
+## 嵌套组件
 
 除了嵌套元素（条件渲染，列表渲染），Svelte组件可以还包含其他Svelte组件。
 
@@ -744,7 +744,7 @@ Svelte将确保在父组件`baz`中`dynamic`的值会被同步，并且在父组
 
 > 组件名称应该按照javascript构造函数的形式约定首字母大写，这也是一种区分元素和模板的简单方法。
 
-#### Yield tags
+### Yield tags
 
 组件可以包含 `{{yeild}}` 标签，来支持父组件插住内容。
 
@@ -802,7 +802,7 @@ modal.html
 </style>
 ```
 
-#### <:Self> tags
+### <:Self> tags
 
 有时候一个组件需要能够嵌套自身。例如，如果你有一个树状的数据结构。在Svelte，这是通过<：Self>标签完成的：
 
@@ -815,7 +815,7 @@ modal.html
 {{/if}}
 ```
 
-#### <:Window> tags
+### <:Window> tags
 
 特殊的<：Window>标签为您提供了一种方便的方式来向窗口声明性地添加事件侦听器。当组件被销毁时，事件侦听器将被自动删除。
 
@@ -869,11 +869,11 @@ modal.html
 </style>
 ```
 
-### 元素指令
+## 元素指令
 
 Svelte的指令是指元素或组件级指令，它们看起来像属性，只是多了一个`:`字符。
 
-#### 事件处理程序
+### 事件处理程序
 
 在大多数应用中，你需要响应用户的操作。在Svelte中，这是通过指令`on:[event]`来实现的。
 
@@ -934,12 +934,12 @@ Svelte的指令是指元素或组件级指令，它们看起来像属性，只�
 <input on:focus='this.select()'>
 ```
 
-#### 自定义事件
+### 自定义事件
 
 你可以定义你自己的自定义事件来处理复杂的用户交互，如拖拽和滑动。更多信息，可以参考有关[自定义事件处理程序](https://svelte.technology/guide#custom-event-handlers)的部分。
 
 
-#### 组件的事件
+### 组件的事件
 
 对于[嵌套组件](https://svelte.technology/guide#nested-components)子组件向父组件通信，使用事件是一个很好的方式。我们来看一个早期的例子，但是把它变成了一个`<CategoryChooser>`组件：
 
@@ -988,7 +988,7 @@ Svelte的指令是指元素或组件级指令，它们看起来像属性，只�
 </script>
 ```
 
-#### Refs（引用）
+### Refs（引用）
 
 引用是存储对特定的DOM节点或组件的一种方便的途径，通过`ref:[name]`申明一个`ref`,并能在组件中通过`this.ref.[name]`来访问到他：
 
@@ -1038,7 +1038,7 @@ Svelte的指令是指元素或组件级指令，它们看起来像属性，只�
 
 > 由于只有一个元素或组件可以使用给定的引用，因此请勿在`{{#each}}`中使用它们，不过你依然可以在`{{#if}}`中使用。
 
-#### 双向数据绑定
+### 双向数据绑定
 
 目前流行的观点认为：应该避免在场景中使用双向绑定，因为它会引起各种难以调试的BUG，并降低程序运行效率，并且自上而下的单向数据流更容易让人理解。这其实是一个高级的废话。
 确实双向绑定做得很糟糕，有各种各样的问题，而且大型应用因为深度嵌套可能会导致状态变化时影响到了与应用不相关的部分。所以它们从禁止组件深度嵌套的约束中受益。
@@ -1088,15 +1088,15 @@ export default {
 </script>
 ```
 
-### 插件
+## 插件
 
 todo...（作者写的todo）
 
-### 服务端渲染
+## 服务端渲染
 
 到目前为止，我们一直都在讨论在浏览器客户端上创建Svelte组件，但是你也可以在Node.js中渲染Svelte组件。这可以让你感到更好的性能上的提升，应用的页面在下载的时候就可以开始渲染了，这个动作比任何javascript代码执行都要早。在某些情况下，这也利于SEO，对于那些因各种原因不能运行javascript的浏览器来说也是有利的。
 
-#### 渲染HTML
+### 渲染HTML
 
 要想使用服务端渲染，我们必须先注册它，这意味着当你`require`你的`.html`组件的时候，它已经被服务端渲染编译器拦截到了：
 
@@ -1121,7 +1121,7 @@ const html = thing.render( data );
 
 > SSR编译器将为你的每个组件生成一个CommonJS模块，这意味着导入和导出语句将会转化为`require`和`module.exports`等选项。如果你的组件依赖了非组件，则他们必须在Node中作为CommonJS模块。如果使用了ES2015模块，建议你将其自动转化成CommonJS。
 
-#### 渲染CSS
+### 渲染CSS
 
 你也可以渲染组件[隔离](https://svelte.technology/guide#scoped-styles)的CSS包括任何嵌套组件：
 
@@ -1133,6 +1133,6 @@ const { css, components } = thing.renderCss();
 
 > 上面的`components`数组，包含了每一个嵌套组件的样式的对象，允许你去除重复多余的样式，不过在大多数时候，你无需这么做。
 
-### todo
+## todo
 
 此文档仍是一项正在进行的工作，就想Svelte本身一样。如果有特定的东西丢失或可以改进，那么请在[GitHub上](https://github.com/sveltejs/svelte.technology)提出一个issue！
