@@ -18,6 +18,8 @@
 
 [阅读介绍性博客文章](https://svelte.technology/blog/frameworks-without-the-framework)，了解更多关于Svelte的目标和哲学。
 
+[中文介绍](https://github.com/tgxpuisb/sveltejs-documentation-zh-CN/blob/master/author-blog.md)
+
 ## 认识与理解svelte组件
 在Svelte中，应用程序由一个或多个组件组成。组件是封装了标签的，样式，与行为的可复用的自包含代的码块。(很像.vue文件)。
 
